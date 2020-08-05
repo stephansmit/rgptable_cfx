@@ -1,4 +1,10 @@
-
+import CoolProp.CoolProp as CP
+import os
+import fortranformat as ff
+import numpy as np
+from multiprocessing import Pool
+from functools import partial
+import sys
 
 
 class SuperHeatTable(object):
@@ -70,10 +76,13 @@ class SuperHeatTable(object):
     def SetSubTables(self):
         properties = ['H','A','v','CVMASS','CPMASS','dPdv','S','V','L']
         with Pool(5) as pool:
-            pool.map(self.SetSubTable, properties)
+            subtables =pool.map(self.GetSubTableLines, properties)
+
+        for i,p in enumerate(properties):
+            setattr(self,"subtable_"+ p, subtables[i])
 
         
-    def SetSubTable(self, prop):
+    def GetSubTableLines(self, prop):
         print("Making Subtable "+ prop)
         d={'H':1,'A':2,'v':3,'CVMASS':4,'CPMASS':5,'dPdv':6,'S':7,'V':8,'L':9}
         nr = d[prop]
@@ -89,8 +98,7 @@ class SuperHeatTable(object):
         lines.append(w.write(self.GetSatPropertiesVec(self.P_vec, "T")))
         print("writing properties "+prop)
         lines.append(w.write(self.GetSatPropertiesVec(self.P_vec, prop)))
-        setattr(self, "subtable_"+prop, lines)
-        return
+        return lines
             
     def GetSubTable(self, prop):
         return getattr(self,"subtable_"+prop)
@@ -268,11 +276,11 @@ class RGPTable(object):
             for line in table:
                 f.write(line + os.linesep)
         
-if __name__="__main__":   
+if __name__=="__main__":   
     table = RGPTable(700, 300, 1e3, 50e5, \
                      CP.PropsSI("T","P",41e5, 'Q',1, "Toluene"), \
                      CP.PropsSI("T","P",1e4, 'Q',1, "Toluene"), \
-                     10, 10,10, "Toluene")
+                     750, 750,10, "Toluene")
     
     table.WriteTable(table.fluid+".rgp")    
 # table = RGPTable(400, 240, 55000, 400000,350,240,  5, 5,5, "R134a")
