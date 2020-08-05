@@ -5,7 +5,7 @@ This repository contains a script to generate a RGP table for [Ansys CFX](https:
 To use install the requirements
 
 ```
-python -m pip install -r requirements
+python -m pip install -r requirements.txt
 ```
 
 Uniform discretization for temperature and a logaritmic discretization in the pressure domain.
