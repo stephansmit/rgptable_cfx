@@ -277,10 +277,10 @@ class RGPTable(object):
                 f.write(line + os.linesep)
         
 if __name__=="__main__":   
-    table = RGPTable(700, 300, 1e3, 50e5, \
+    table = RGPTable(900, 300, 1e3, 50e5, \
                      CP.PropsSI("T","P",41e5, 'Q',1, "Toluene"), \
                      CP.PropsSI("T","P",1e4, 'Q',1, "Toluene"), \
-                     750, 750,10, "Toluene")
+                     900, 900,10, "Toluene")
     
     table.WriteTable(table.fluid+".rgp")    
 # table = RGPTable(400, 240, 55000, 400000,350,240,  5, 5,5, "R134a")
