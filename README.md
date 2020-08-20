@@ -10,5 +10,5 @@ python -m pip install -r requirements.txt
 
 Uniform discretization for temperature and a logaritmic discretization in the pressure domain.
 
-![alt text](https://github.com/stephansmit/rgptable_cfx/raw/master/compressibility.png)
+![alt text](https://github.com/stephansmit/rgptable_cfx/raw/master/table.png)
 
